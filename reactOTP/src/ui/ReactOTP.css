@@ -1,0 +1,63 @@
+.widget-reactotp-inputs {
+    display: flex;
+    align-items: center;
+}
+
+/* Default row and box style (the look of version 1.0.0); a container or input class replaces it. */
+.widget-reactotp-inputs-default {
+    justify-content: center;
+    margin: 1rem 0;
+}
+
+.widget-reactotp-input {
+    min-width: 0;
+    text-align: center;
+}
+
+.widget-reactotp-input-default {
+    flex: 0 1 6rem;
+    width: 6rem;
+    height: 6rem;
+    margin: 0 0.5rem;
+    padding: 0;
+    font-size: 4rem;
+    line-height: 6rem;
+    border: 2px solid rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    background-color: #fff;
+}
+
+.widget-reactotp-input-default::placeholder {
+    color: #c7cbd3;
+}
+
+.widget-reactotp-input-default:focus {
+    border-color: #264ae5;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(38, 74, 229, 0.2);
+}
+
+.widget-reactotp-input:disabled {
+    cursor: not-allowed;
+    background-color: #f3f3f3;
+}
+
+/* Hide the up/down arrows of number boxes. */
+.widget-reactotp-input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.widget-reactotp-input::-webkit-outer-spin-button,
+.widget-reactotp-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+@media (max-width: 576px) {
+    .widget-reactotp-input-default {
+        height: 3.5rem;
+        margin: 0 0.25rem;
+        font-size: 2rem;
+        line-height: 3.5rem;
+    }
+}
