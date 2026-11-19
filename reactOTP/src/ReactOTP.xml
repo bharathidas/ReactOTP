@@ -28,19 +28,12 @@
             <propertyGroup caption="Boxes">
                 <property key="numInputs" type="expression" required="false" defaultValue="4">
                     <caption>Number of inputs</caption>
-                    <description>
-                        Number of boxes (1–20), for example 6 or $currentObject/CodeLength. Empty, 0 or a value
-                        outside 1–20 uses 4.
-                    </description>
+                    <description>Number of boxes, 1–20, e.g. 6 or $currentObject/CodeLength. Else 4.</description>
                     <returnType type="Integer" />
                 </property>
                 <property key="inputType" type="expression" required="false" defaultValue="'text'">
                     <caption>Input type</caption>
-                    <description>
-                        'text', 'number', 'tel' or 'password', for example 'number' or $currentObject/InputType.
-                        Empty or another value uses text. With number and tel only digits are accepted and phones show
-                        the number keyboard.
-                    </description>
+                    <description>'text', 'number', 'tel' or 'password'. Anything else uses text.</description>
                     <returnType type="String" />
                 </property>
                 <property key="separator" type="expression" required="false" defaultValue="'-'">
@@ -50,34 +43,22 @@
                 </property>
                 <property key="placeholder" type="expression" required="false">
                     <caption>Placeholder</caption>
-                    <description>
-                        Shown in empty boxes: one character for every box (for example '0'), or one character per box
-                        (for example '123456' for 6 boxes).
-                    </description>
+                    <description>One character for every box ('0') or one per box ('123456').</description>
                     <returnType type="String" />
                 </property>
             </propertyGroup>
             <propertyGroup caption="Appearance">
                 <property key="InputStyleKey" type="textTemplate" required="false">
                     <caption>Input class</caption>
-                    <description>
-                        CSS class for each box. When set, it replaces the default box style (large boxes with a grey
-                        border).
-                    </description>
+                    <description>CSS class for each box; replaces the default box style.</description>
                 </property>
                 <property key="ContainerStyleKey" type="textTemplate" required="false">
                     <caption>Container class</caption>
-                    <description>
-                        CSS class for the row of boxes. When set, it replaces the default row style (centered, with a
-                        margin).
-                    </description>
+                    <description>CSS class for the row of boxes; replaces the default row style.</description>
                 </property>
                 <property key="autoFocus" type="expression" required="false" defaultValue="false">
                     <caption>Auto focus</caption>
-                    <description>
-                        Put the cursor in the first box when the page opens, for example true or
-                        $currentObject/CodeSent. Empty means no.
-                    </description>
+                    <description>Cursor in the first box when the page opens, e.g. true. Empty: no.</description>
                     <returnType type="Boolean" />
                 </property>
             </propertyGroup>
