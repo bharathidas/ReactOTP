@@ -24,39 +24,37 @@
                         <attributeType name="String" />
                     </attributeTypes>
                 </property>
-                <property key="numInputsKey" type="attribute" required="false">
+            </propertyGroup>
+            <propertyGroup caption="Boxes">
+                <property key="numInputs" type="expression" required="false" defaultValue="4">
                     <caption>Number of inputs</caption>
-                    <description>Number of boxes (1–20). Empty or 0 uses 4.</description>
-                    <attributeTypes>
-                        <attributeType name="Integer" />
-                    </attributeTypes>
+                    <description>
+                        Number of boxes (1–20), for example 6 or $currentObject/CodeLength. Empty, 0 or a value
+                        outside 1–20 uses 4.
+                    </description>
+                    <returnType type="Integer" />
                 </property>
-                <property key="inputTypeKey" type="attribute" required="false">
+                <property key="inputType" type="expression" required="false" defaultValue="'text'">
                     <caption>Input type</caption>
                     <description>
-                        text, number, tel or password. Empty or another value uses text. With number and tel only
-                        digits are accepted and phones show the number keyboard.
+                        'text', 'number', 'tel' or 'password', for example 'number' or $currentObject/InputType.
+                        Empty or another value uses text. With number and tel only digits are accepted and phones show
+                        the number keyboard.
                     </description>
-                    <attributeTypes>
-                        <attributeType name="String" />
-                    </attributeTypes>
+                    <returnType type="String" />
                 </property>
-                <property key="renderSeparatorKey" type="attribute" required="false">
+                <property key="separator" type="expression" required="false" defaultValue="'-'">
                     <caption>Separator</caption>
-                    <description>Text shown between the boxes. Empty uses -.</description>
-                    <attributeTypes>
-                        <attributeType name="String" />
-                    </attributeTypes>
+                    <description>Text shown between the boxes, for example '-' or ' '. Empty uses -.</description>
+                    <returnType type="String" />
                 </property>
-                <property key="placeholderKey" type="attribute" required="false">
+                <property key="placeholder" type="expression" required="false">
                     <caption>Placeholder</caption>
                     <description>
-                        Shown in empty boxes: one character for every box (for example 0), or one character per box
-                        (for example 123456 for 6 boxes).
+                        Shown in empty boxes: one character for every box (for example '0'), or one character per box
+                        (for example '123456' for 6 boxes).
                     </description>
-                    <attributeTypes>
-                        <attributeType name="String" />
-                    </attributeTypes>
+                    <returnType type="String" />
                 </property>
             </propertyGroup>
             <propertyGroup caption="Appearance">
@@ -74,9 +72,13 @@
                         margin).
                     </description>
                 </property>
-                <property key="autoFocusKey" type="boolean" defaultValue="false">
+                <property key="autoFocus" type="expression" required="false" defaultValue="false">
                     <caption>Auto focus</caption>
-                    <description>Put the cursor in the first box when the page opens.</description>
+                    <description>
+                        Put the cursor in the first box when the page opens, for example true or
+                        $currentObject/CodeSent. Empty means no.
+                    </description>
+                    <returnType type="Boolean" />
                 </property>
             </propertyGroup>
             <propertyGroup caption="Common">

@@ -6,8 +6,51 @@ A versatile one-time password input for Mendix. React OTP shows one box per char
 
 ## Documentation
 
-- [React OTP 10.24.17.docx](docs/React%20OTP%2010.24.17.docx): install, upgrade, configuration, properties, examples, styling and limitations.
-- [Marketplace documentation](docs/Marketplace%20Documentation%20-%20React%20OTP.md): the same in short form.
+- [Marketplace documentation](docs/Marketplace%20Documentation%20-%20React%20OTP.md): install, upgrade, configuration, properties, examples and styling for 2.0.0.
+- [React OTP 10.24.17.docx](docs/React%20OTP%2010.24.17.docx): the full guide for version 1.1.0 (settings as attributes). Everything except the property types still applies to 2.0.0.
+- [CHANGELOG](reactOTP/CHANGELOG.md)
+
+## Version 2.0.0: settings are expressions
+
+In 2.0.0 every setting except **Value** is an expression. You can type a constant, use an attribute, or write a condition, so you no longer need helper attributes for fixed settings.
+
+| Setting | Type | Examples |
+| --- | --- | --- |
+| Value | String attribute (unchanged) | `PhoneCode` |
+| Number of inputs | Integer expression | `6`, `$currentObject/CodeLength`, `if $currentObject/UsePin then 4 else 6` |
+| Input type | String expression | `'number'`, `'password'`, `$currentObject/InputType` |
+| Separator | String expression | `'-'`, `' '`, `'•'` |
+| Placeholder | String expression | `'0'`, `'123456'` |
+| Auto focus | Boolean expression | `true`, `$currentObject/CodeSent` |
+
+Value stays an attribute because the widget writes the code to it.
+
+### Download
+
+- Download `mendix.ReactOTP.mpk` from the release [Version2.0.0](https://github.com/bharathidas/ReactOTP/releases/tag/Version2.0.0) or from the root of this repository.
+- Copy it into the `widgets` folder of your app and press **F4** (App > Synchronize App Directory) in Studio Pro.
+- Version 1.1.0 (settings as attributes) is in release [Version1.1.0](https://github.com/bharathidas/ReactOTP/releases/tag/Version1.1.0).
+
+### Changes in 2.0.0
+
+- **Breaking:** Number of inputs, Input type, Separator, Placeholder and Auto focus are expressions instead of attributes (Auto focus was a checkbox). See [Upgrading from 1.x](#upgrading-from-1x).
+- New widgets start with Number of inputs `4`, Input type `'text'`, Separator `'-'` and Auto focus `false`. Empty, 0 or out-of-range values still fall back to 4 text boxes with `-`.
+- Studio Pro design mode shows the number of boxes, the separator and the placeholder when they are constants.
+- Studio Pro warns when a constant Number of inputs is outside 1–20, or a constant Input type is not `'text'`, `'number'`, `'tel'` or `'password'`.
+- Auto focus now also works when other inputs come before the widget on the page. Before, Mendix moved the focus to the first input of the page right after the widget had focused its first box.
+- The settings are in a new **Boxes** group; **Data source** holds only Value.
+
+Tested in a Mendix 10.24.17 app (50 automated checks): all 1.1.0 checks with attribute expressions, plus constants, conditional expressions, wrong constants falling back to the defaults, and auto focus with other inputs on the page. The Studio Pro model check (`mx check`) shows the two warnings for wrong constants and no errors.
+
+### Upgrading from 1.x
+
+1. Replace `mendix.ReactOTP.mpk` in the `widgets` folder of your app with the 2.0.0 file and press **F4**.
+2. Studio Pro reports that the widget definition has changed. Right-click the error and choose **Update all widgets**.
+3. The property names changed, so **Number of inputs, Input type, Separator, Placeholder and Auto focus are empty** after the update. Open each React OTP widget and enter them again:
+   - an attribute you selected before: `$currentObject/<Attribute>`, for example `$currentObject/NumInputs`;
+   - a fixed value: the constant, for example `6` or `'number'`;
+   - Auto focus that was ticked: `true`.
+4. Until you do, the widget uses its defaults: 4 text boxes with `-`, no placeholder and no auto focus. Value, Input class, Container class and the events are kept.
 
 ## Version 1.1.0 for Mendix Studio Pro 10.24.17
 
@@ -15,9 +58,8 @@ React OTP 1.1.0 is rebuilt for **Mendix Studio Pro 10.24.17**.
 
 ### Download
 
-- Download `mendix.ReactOTP.mpk` from the release [Version1.1.0](https://github.com/bharathidas/ReactOTP/releases/tag/Version1.1.0) or from the root of this repository.
-- Copy it into the `widgets` folder of your app and press **F4** (App > Synchronize App Directory) in Studio Pro.
-- The previous package is in release [version1](https://github.com/bharathidas/ReactOTP/releases/tag/version1).
+- Download `mendix.ReactOTP.mpk` 1.1.0 from the release [Version1.1.0](https://github.com/bharathidas/ReactOTP/releases/tag/Version1.1.0).
+- The 1.0.0 package is in release [version1](https://github.com/bharathidas/ReactOTP/releases/tag/version1).
 
 ### Changes in 1.1.0
 
@@ -56,33 +98,33 @@ npm install
 npm run release
 ```
 
-The package is created in `reactOTP/dist/1.1.0/mendix.ReactOTP.mpk`. Node.js 16 or later is required.
+The package is created in `reactOTP/dist/2.0.0/mendix.ReactOTP.mpk`. Node.js 16 or later is required.
 
 ---
 
-## Features
+## Features (2.0.0)
 
 ### •	Value:
 The String attribute that holds the code. Required.
 ### •	Number of inputs:
-Integer attribute with the number of boxes, 1–20. Default is 4.
+Integer expression with the number of boxes, 1–20, for example `6` or `$currentObject/CodeLength`. Empty, 0 or out of range uses 4.
 ### •	Input type:
-String attribute: `text`, `number`, `tel` or `password`. Default is `text`. `number` and `tel` accept only digits and show the number keyboard on phones.
+String expression: `'text'`, `'number'`, `'tel'` or `'password'`. Default is `'text'`. `number` and `tel` accept only digits and show the number keyboard on phones.
 ### •	Separator:
-String attribute with the text between the boxes. Default is `-`.
+String expression with the text between the boxes. Default is `'-'`.
 ### •	Placeholder:
-String attribute shown in empty boxes: one character for every box, or one character per box.
+String expression shown in empty boxes: one character for every box (`'0'`), or one character per box (`'123456'`).
 ### •	Input class:
 CSS class for each box; replaces the default box style.
 ### •	Container class:
 CSS class for the row of boxes; replaces the default row style.
 ### •	Auto focus:
-Puts the cursor in the first box when the page opens.
+Boolean expression: puts the cursor in the first box when the page opens.
 ### •	Events:
 On change and On complete actions.
 
 ## Dependencies:
-•	Mendix Studio Pro 10.24.17 (widget 1.1.0). Widget 1.0.0: Mendix modeler 9.12.4.
+•	Mendix Studio Pro 10.24.17 or a later 10.24 version (widget 2.0.0 and 1.1.0). Widget 1.0.0: Mendix modeler 9.12.4.
 
 ## Issues, suggestions and feature requests
 https://github.com/bharathidas/ReactOTP/issues

@@ -13,13 +13,13 @@ export interface ReactOTPContainerProps {
     style?: CSSProperties;
     tabIndex?: number;
     valueKey: EditableValue<string>;
-    numInputsKey?: EditableValue<Big>;
-    inputTypeKey?: EditableValue<string>;
-    renderSeparatorKey?: EditableValue<string>;
-    placeholderKey?: EditableValue<string>;
+    numInputs?: DynamicValue<Big>;
+    inputType?: DynamicValue<string>;
+    separator?: DynamicValue<string>;
+    placeholder?: DynamicValue<string>;
     InputStyleKey?: DynamicValue<string>;
     ContainerStyleKey?: DynamicValue<string>;
-    autoFocusKey: boolean;
+    autoFocus?: DynamicValue<boolean>;
     onChangeAction?: ActionValue;
     onCompleteAction?: ActionValue;
 }
@@ -35,13 +35,13 @@ export interface ReactOTPPreviewProps {
     readOnly: boolean;
     renderMode?: "design" | "xray" | "structure";
     valueKey: string;
-    numInputsKey: string;
-    inputTypeKey: string;
-    renderSeparatorKey: string;
-    placeholderKey: string;
+    numInputs: string;
+    inputType: string;
+    separator: string;
+    placeholder: string;
     InputStyleKey: string;
     ContainerStyleKey: string;
-    autoFocusKey: boolean;
+    autoFocus: string;
     onChangeAction: {} | null;
     onCompleteAction: {} | null;
 }

@@ -1,4 +1,5 @@
 import { ReactOTPPreviewProps } from "../typings/ReactOTPProps";
+import { constantInteger, constantString } from "./utils/constants";
 
 export type Platform = "web" | "desktop";
 
@@ -112,20 +113,30 @@ export function getProperties(
     return defaultProperties;
 }
 
-// export function check(_values: ReactOTPPreviewProps): Problem[] {
-//     const errors: Problem[] = [];
-//     // Add errors to the above array to throw errors in Studio and Studio Pro.
-//     /* Example
-//     if (values.myProperty !== "custom") {
-//         errors.push({
-//             property: `myProperty`,
-//             message: `The value of 'myProperty' is different of 'custom'.`,
-//             url: "https://github.com/myrepo/mywidget"
-//         });
-//     }
-//     */
-//     return errors;
-// }
+const INPUT_TYPES = ["text", "number", "tel", "password"];
+
+// Only constant expressions can be checked here; attribute values are checked at run time (defaults are used).
+export function check(values: ReactOTPPreviewProps): Problem[] {
+    const errors: Problem[] = [];
+    const n = constantInteger(values.numInputs);
+    if (n !== undefined && n !== 0 && (n < 1 || n > 20)) {
+        errors.push({
+            property: "numInputs",
+            severity: "warning",
+            message: "Number of inputs must be between 1 and 20. The widget shows 4 boxes for " + n + "."
+        });
+    }
+    const type = constantString(values.inputType);
+    if (type !== undefined && type.trim() !== "" && INPUT_TYPES.indexOf(type.trim().toLowerCase()) === -1) {
+        errors.push({
+            property: "inputType",
+            severity: "warning",
+            message:
+                "Input type must be 'text', 'number', 'tel' or 'password'. The widget uses text for '" + type + "'."
+        });
+    }
+    return errors;
+}
 
 // export function getPreview(values: ReactOTPPreviewProps, isDarkMode: boolean, version: number[]): PreviewProps {
 //     // Customize your pluggable widget appearance for Studio Pro.
